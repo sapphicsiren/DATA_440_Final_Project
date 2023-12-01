@@ -57,6 +57,7 @@ def split_description(file):
     #ring: proline ring has endo carbon or N (which position in/out (out of plane in ring)
     
     df.columns = ['conformer_file', 'conformer_id', 'isomer', 'ring']
+    
     return df
 
 
@@ -141,7 +142,7 @@ def extract_coords(dipeptide, conformer_id):
     start = 0
     end = 0
 
-    DATA_PATH = 'data_private/'+ dipeptide + '_neutrals/'
+    DATA_PATH = './data_private/'+ dipeptide + '_neutrals/'
 
     filename = conformer_id + "f.log"
     newfile = dipeptide + '_clean/' + filename[:-5] + '.final.opt.xyz'
@@ -210,7 +211,8 @@ def read_coords(dipeptide, conformer_id):
     dipep = dipeptide
     dipep_conformer = conformer_id
     
-    dipep_file = extract_coords(dipep, dipep_conformer)
+    filename = conformer_id + "f.log"
+    dipep_file = 'data/' + dipeptide + '_neutrals/' + filename[:-5] + '.final.opt.xyz'
 
     f = open(dipep_file, "r")
     lines = f.readlines()
