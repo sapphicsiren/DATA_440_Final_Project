@@ -13,3 +13,9 @@ The raw data will not be made publically available as it contains all of the the
 ## **Current Functionality**
 
 Currently my program is able to read, preprocess, and visualize the coordinate data for each isomer. I have identified the specific atoms of interest and am working on the algorithm for classification. 
+
+To run the code:
+- Clone the repository
+- Install plotly.express if you do not have it using
+  !pip install plotly.express
+- Open function_playground.ipynb and run blocks
