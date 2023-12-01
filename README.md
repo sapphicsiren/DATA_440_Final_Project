@@ -12,4 +12,10 @@ The raw data will not be made publically available as it contains all of the the
 
 ## **Current Functionality**
 
-Currently my program is able to read, preprocess, and visualize the coordinate data for each isomer. I have identified the specific atoms of interest and am working on the algorithm for classification. 
+Currently my program is able to read, preprocess, visualize, and classify each isomer. So far the labels are for if the isomer is cis or trans. Next step is validating this algorithm.  
+
+To run the code:
+- Clone the repository
+- Install plotly.express if you do not have it using
+  !pip install plotly.express
+- Open function_playground.ipynb and run blocks
