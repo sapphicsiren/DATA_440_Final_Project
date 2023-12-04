@@ -13,17 +13,6 @@ import math
 
 conn, c = dpp.Connect()
 
-#dipeptide df/tables
-def make_dipep_tables(dipeptide):
-    dipep = dipeptide
-    
-    subset_dipeptide = dpp.read_workup(dipep)
-    df_dipeptide = dpp.split_description(subset_dipeptide)
-    
-    dpp.conformer_to_sql(dipep, df_dipeptide)
-    
-    return(True)
-
 
 def make_conf_tables(dipeptide, dipeptide_conformer):
     dipep = dipeptide

@@ -17,17 +17,6 @@ def Connect():
     
     return(conn, c)
 
-#read the dipeptide workups
-def read_workup(dipeptide):
-    PATHWAY = 'data_private/' + dipeptide + '_workup.xlsx'
-    workup = pd.read_excel(PATHWAY)
-    
-    #all the columns have different names, for simplicity manually subset before
-    #uploading the file, and then change column names after 
-    
-    workup.columns = ['conformer', 'description']
-    return(workup)
-
 
 #description subsetting function 
 #some of the descriptions for neutrals contain different amounts of info
@@ -136,76 +125,6 @@ def coord_to_sql(dipeptide_conformer, conformer_df):
     return(True)
 
 
-#subset the .log file to just return the coordinates 
-#dipeptide: input must be ProXxx
-def extract_coords(dipeptide, conformer_id):
-    start = 0
-    end = 0
-
-    DATA_PATH = './data_private/'+ dipeptide + '_neutrals/'
-
-    filename = conformer_id + "f.log"
-    newfile = dipeptide + '_clean/' + filename[:-5] + '.final.opt.xyz'
-
-    openold = open(DATA_PATH + filename, "r")
-
-    os.makedirs(os.path.dirname(DATA_PATH + newfile), exist_ok=True)
-    opennew = open(DATA_PATH + newfile, "w")
-
-    rline = openold.readlines()
-    for i in range (len(rline)):
-        if "Standard orientation:" in rline[i]:
-            start = i
-
-    for m in range (start + 5, len(rline)):
-        if "---" in rline[m]:
-            end = m
-            break
-
-    ## Convert to Cartesian coordinates format
-    ## convert atomic number to atomic symbol
-
-    for line in rline[start+5 : end] :
-        words = line.split()
-        
-        word0 = str(words[0])     #Index
-        word1 = int(words[1])     #Identity of atom
-        word3 = str(words[3])     #X-coords
-        word4 = str(words[4])     #Y-coords
-        word5 = str(words[5])     #Z-coords
-
-        #only include relevant atoms to amino acids 
-        if   word1 ==   1 : 
-            word1 = "H"
-        elif word1 ==   6 : 
-            word1 = "C"
-        elif word1 ==   7 : 
-            word1 = "N"
-        elif word1 ==   8 : 
-            word1 = "O"
-        elif word1 ==  16 : 
-            word1 = "S"
-
-        #print(word0, word1, word3)
-        print([word0, word1, word3, word4, word5], file=opennew)
-
-    openold.close()
-    opennew.close()
-
-    #let's also save a clean copy of the data to github
-    # Specify the path of the destination directory you want to copy to
-    destination_directory = 'DATA_440_Final_Project/data/' + dipeptide + '_neutrals/'
-
-    if not os.path.exists(destination_directory):
-        os.makedirs(destination_directory)
-    
-    # Use the shutil.copy() method to copy the file to the destination directory
-    shutil.copy(DATA_PATH + newfile, destination_directory)
-    
-    print("#"*10 + " extract_coords() Done " + "#"*10)
-    return(DATA_PATH + newfile)
-
-
 #now let's read from the newly outputted file and turn it into a dataframe
 def read_coords(dipeptide, conformer_id):
     dipep = dipeptide
@@ -223,6 +142,5 @@ def read_coords(dipeptide, conformer_id):
     
     #generate a dataframe using the coordinates data 
     coords_df = pd.DataFrame(coords_list, columns = ['atom_idx', 'element', 'x_coord', 'y_coord', 'z_coord'])
-    
-    print("#"*10 + " read_coords() Done " + "#"*10)
+
     return(coords_df)
