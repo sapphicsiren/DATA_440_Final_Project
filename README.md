@@ -8,7 +8,7 @@ A program that can be utilized to classify and label theoretically generated con
 For this first stage of the project, I am focused on just classifying the dipeptides as either cis or trans isomers. 
 
 ### *Project Context*
-In the directory titles 'slides' there is a slideshow pdf which includes some background chemistry information along with an explanation for how this project is set-up. 
+In the directory titled 'slides' there is a slideshow pdf which includes some background chemistry information along with an explanation for how this project is set-up. 
 
 ## **The Data**
 
