@@ -17,12 +17,14 @@ def Connect():
     
     return(conn, c)
 
-
-#description subsetting function 
-#some of the descriptions for neutrals contain different amounts of info
-#for ease of use, this function will go ahead and try to get only the first 
-#two descriptors, cis/trans and ring in/out
 def split_description(file):
+    '''
+    Description subsetting function - 
+    Some of the descriptions for ProXxx neutrals contain different 
+    amounts of information. For ease of use, this function will 
+    get only the first two descriptors, cis/trans and ring in/out.
+    '''
+    
     df_dat = []
 
     for dat in range(len(file)):
@@ -50,9 +52,14 @@ def split_description(file):
     return df
 
 
-#turn conformer_df into an sql table 
 def conformer_to_sql(dipeptide, dipeptide_df):
- 
+    '''
+    Turn conformer_df into an sql table 
+    
+    Naming:
+    - tProXxx: the dipeptide sql table
+    '''
+    
     conn, c = Connect()
     
     tDipeptide = 't' + dipeptide
@@ -89,6 +96,14 @@ def conformer_to_sql(dipeptide, dipeptide_df):
 
 
 def coord_to_sql(dipeptide_conformer, conformer_df):
+    '''
+    Turn the coordinate information for a specific conformer
+    into a sql table
+    
+    Naming:
+    - t{dipeptide_conformer}: the conformer sql table 
+    '''
+    
     conn, c = Connect()
     
     tConformer = 't' + dipeptide_conformer
@@ -125,8 +140,12 @@ def coord_to_sql(dipeptide_conformer, conformer_df):
     return(True)
 
 
-#now let's read from the newly outputted file and turn it into a dataframe
 def read_coords(dipeptide, conformer_id):
+    '''
+    Reads the cleaned coordinate data and returns it
+    as a pandas DataFrame 
+    '''
+    
     dipep = dipeptide
     dipep_conformer = conformer_id
     
